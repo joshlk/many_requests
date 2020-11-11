@@ -1,7 +1,0 @@
-easyget
-=======
-
-.. toctree::
-   :maxdepth: 4
-
-   easyget
