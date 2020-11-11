@@ -9,7 +9,7 @@ Dead easy interface for executing many HTTP requests asynchronously.
 It has been tested in the wild with over 10 million requests.
 Automatically handles errors and executes retries.
 
-Built on-top of [Trio](https://github.com/python-trio/trio) and [asks](https://github.com/theelous3/asks).
+Built on-top of [Trio](https://github.com/python-trio/trio) and [asks](https://github.com/theelous3/asks). Interface heavly inspired by [Requests](https://github.com/psf/requests) and [joblib](https://github.com/joblib/joblib).
 
 Also provides helper functions for executing [embarrassingly parallel](https://en.wikipedia.org/wiki/Embarrassingly_parallel) async coroutines.
 
