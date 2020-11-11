@@ -62,7 +62,7 @@ def web_server():
     logging.info('Start mock server')
     p = multiprocessing.Process(target=mock_web_server)
     p.start()
-    sleep(5)  # Wait for server to stat-up
+    sleep(10)  # Wait for server to start-up
     yield web
     logging.info('Teardown mock server')
     p.terminate()
