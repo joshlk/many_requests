@@ -1,6 +1,7 @@
 import asyncio
 import multiprocessing
 import random
+from time import sleep
 from unittest import TestCase
 from aiohttp import web
 import pytest
@@ -48,7 +49,7 @@ def web_server():
                 weights=[0.6,0.4]
             )[0]
 
-        asyncio.set_event_loop(asyncio.new_event_loop()) # Only use if in seperate thread or process
+        asyncio.set_event_loop(asyncio.new_event_loop())  # Only use if in seperate thread or process
         app = web.Application()
         app.router.add_get('/', ok_handle)
         app.router.add_get('/ok', ok_handle)
@@ -61,6 +62,7 @@ def web_server():
     logging.info('Start mock server')
     p = multiprocessing.Process(target=mock_web_server)
     p.start()
+    sleep(5)  # Wait for server to stat-up
     yield web
     logging.info('Teardown mock server')
     p.terminate()
