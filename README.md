@@ -1,4 +1,9 @@
-# easyget
+[![PyPI](https://img.shields.io/pypi/v/dataclassframe)](https://pypi.org/project/many_requests/)
+![Python](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8%20%7C%203.9-blue)
+[![Build Status](https://travis-ci.com/joshlk/many_requests.svg?branch=main)](https://travis-ci.com/joshlk/many_requests)
+[![Documentation](https://readthedocs.org/projects/pip/badge/?version=latest&style=flat)](https://joshlk.github.io/many_requests)
+
+# many_requests
 
 Dead easy interface for executing many HTTP requests asynchronously.
 It has been tested in the wild with over 10 million requests.
