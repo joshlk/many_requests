@@ -1,4 +1,4 @@
-# Welcome to easyget's documentation!
+# Welcome to many-requests's documentation!
 
 Dead easy interface for executing many HTTP requests asynchronously.
 It has been tested in the wild with over 10 million requests.
@@ -7,6 +7,12 @@ Automatically handles errors and executes retries.
 Built on-top of [Trio](https://github.com/python-trio/trio) and [asks](https://github.com/theelous3/asks).
 
 Also provides helper functions for executing [embarrassingly parallel](https://en.wikipedia.org/wiki/Embarrassingly_parallel) async coroutines.
+
+To install:
+
+```bash
+pip install many-requests
+```
 
 ## Example Usage
 

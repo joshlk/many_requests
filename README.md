@@ -13,6 +13,12 @@ Built on-top of [Trio](https://github.com/python-trio/trio) and [asks](https://g
 
 Also provides helper functions for executing [embarrassingly parallel](https://en.wikipedia.org/wiki/Embarrassingly_parallel) async coroutines.
 
+To install:
+
+```bash
+pip install many-requests
+```
+
 ## Example Usage
 
 Execute 10 GET requests for example.org:

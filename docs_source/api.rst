@@ -2,18 +2,18 @@
 API
 ============
 
-:mod:`easyget`
-=====================
+:mod:`many_requests`
+====================
 
-easyget.easy\_requests module
------------------------------
+many_requests.many\_requests module
+-----------------------------------
 
 .. autoclass:: many_requests.many_requests_.ManyRequests
    :members:
    :special-members: __call__
 
-easyget.easy\_async module
---------------------------
+many_requests.easy\_async module
+--------------------------------
 
 .. autoclass:: many_requests.easy_async.EasyAsync
    :members:
