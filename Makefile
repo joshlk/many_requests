@@ -14,15 +14,15 @@ clean:
 	#git clean -fdX
 
 venv-create:
-	python -m venv dataclassframe-venv
-	source dataclassframe-venv/bin/activate
+	python -m venv many_requests-venv
+	source many_requests-venv/bin/activate
 
 venv-activate:
 	# Doesn't work. Need to execute manually
-	source dataclassframe-venv/bin/activate
+	source many_requests-venv/bin/activate
 
 venv-delete:
-	rm -rf dataclassframe-venv
+	rm -rf many_requests-venv
 
 docs:
 	sphinx-build -a -E -b html docs_source docs

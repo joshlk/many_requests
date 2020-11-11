@@ -25,13 +25,13 @@ make test-pypi
 Activate virtual env (might need to `make venv-create`)
 
 ```shell script
-source easyget-venv/bin/activate
+source many_requests-venv/bin/activate
 ```
 
 Test install (in virtual env):
 
 ```shell script
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple easyget
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple many_requests
 ```
 
 Then push to real PyPI:
