@@ -3,10 +3,10 @@ from unittest import TestCase
 
 import asks
 from trio import sleep
-
+from flaky import flaky
 from many_requests.easy_async import EasyAsync, delayed, zip_kw
 
-
+@flaky(max_runs=5, min_passes=1)
 class TestEasyAsync(TestCase):
 
     def test_EasyAsync_sleep(self):

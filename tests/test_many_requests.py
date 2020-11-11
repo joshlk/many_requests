@@ -6,11 +6,12 @@ from aiohttp import web
 import pytest
 from asks.response_objects import Response
 import logging
+from flaky import flaky
 
 from many_requests.many_requests_ import ManyRequests
 from many_requests.common import BadResponse
 
-
+@flaky(max_runs=5, min_passes=1)
 @pytest.fixture(scope="module")
 def web_server():
     def mock_web_server():

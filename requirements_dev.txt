@@ -8,3 +8,4 @@ recommonmark
 sphinx-rtd-theme
 bump2version
 aiohttp
+flaky
