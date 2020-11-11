@@ -1,0 +1,12 @@
+# Getting started
+
+## Installing
+
+Get the latest version using pip/PyPi
+
+```shell
+pip install easyget
+```
+
+## Example usage
+

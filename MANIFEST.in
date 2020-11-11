@@ -1,0 +1,6 @@
+include README*.md
+include requirements*.txt
+include LICENSE
+include pyproject.toml
+global-include *.pyx
+global-include *.pyd
