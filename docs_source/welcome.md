@@ -37,7 +37,8 @@ Execute 10 GET requests using HTTP Basic authentication:
 ```python
 from asks import BasicAuth
 
-item_list = ["12345", "23456", "34567", "45678", "56789"]
+item_list = ["12345", "23456", "34567", "45678", "56789",
+             "67890", "09876", "98765", "87654", "76543"]
 
 user = "username"
 password = "password"
