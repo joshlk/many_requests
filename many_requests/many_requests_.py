@@ -75,8 +75,9 @@ class ManyRequests:
         the output. A `BadResponse` will contain the last response and error reason.
 
         Arguments mimic `asks.request`_, which in turn mimics `requests.request`_.
-        Each argument could be a single item or a list of items. When they are a single item, that attribute is
-        duplicated for every request.
+
+        **Each argument could be a single item or a list of items. When they are a single item, that attribute is
+        duplicated for every request.**
 
         Args:
             method: HTTP method type `GET`, `OPTIONS`, `HEAD`, `POST`, `PUT`, `PATCH`, or `DELETE`.
