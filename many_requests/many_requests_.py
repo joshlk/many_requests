@@ -86,7 +86,7 @@ class ManyRequests:
             json: A JSON serializable dictionary to send as JSON in the body of the Request.
             headers: Dictionary of HTTP Headers to send with the Request
             cookies: Dictionary object to send with the Request
-            auth: Enable Basic/Digest/Custom HTTP Auth. Should be a child of `AuthBase`
+            auth: Enable Basic/Digest/Custom HTTP Auth. Should be a child of `asks.AuthBase`
 
         Returns:
             responses: A list of responses in the same order of the requests. Will include a `BadResponse` in the
