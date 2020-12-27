@@ -76,8 +76,8 @@ class ManyRequests:
 
         Arguments mimic `asks.request`_, which in turn mimics `requests.request`_.
 
-        **Each argument could be a single item or a list of items. When they are a single item, that attribute is
-        duplicated for every request.**
+        **Each argument can be a single item or a list of N items, where N is the number of requests.
+        When the argument is a single item, that attribute is duplicated N times for every request.**
 
         Args:
             method: HTTP method type `GET`, `OPTIONS`, `HEAD`, `POST`, `PUT`, `PATCH`, or `DELETE`.

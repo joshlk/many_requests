@@ -203,8 +203,8 @@ can be changed with OS configuration.</p></li>
 If no ok response was obtained after retires a <cite>BadResponse</cite> will be included in the corresponding position of
 the output. A <cite>BadResponse</cite> will contain the last response and error reason.</p>
 <p>Arguments mimic <a class="reference external" href="https://asks.readthedocs.io/en/latest/overview-of-funcs-and-args.html">asks.request</a>, which in turn mimics <a class="reference external" href="https://2.python-requests.org/en/master/api/#requests.request">requests.request</a>.</p>
-<p><strong>Each argument could be a single item or a list of items. When they are a single item, that attribute is
-duplicated for every request.</strong></p>
+<p><strong>Each argument can be a single item or a list of N items, where N is the number of requests.
+When the argument is a single item, that attribute is duplicated N times for every request.</strong></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
