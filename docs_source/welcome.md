@@ -21,15 +21,16 @@ Execute 10 GET requests for example.org:
 ```python
 from many_requests import ManyRequests
 responses = ManyRequests(n_workers=5, n_connections=5)(
-                 method='GET', url=['https://example.org' for i in range(10)])
+                method='GET',
+                url=['https://example.org' for i in range(10)])
 ```
 
 Query HackNews API for 10 items and parse JSON output:
 
 ```python
 responses = ManyRequests(n_workers=5, n_connections=5, json=True)(
-                 method='GET',
-                 url=[f'https://hacker-news.firebaseio.com/v0/item/{i}.json?print=pretty' for i in range(10)])
+                method='GET',
+                url=[f'https://hacker-news.firebaseio.com/v0/item/{i}.json?print=pretty' for i in range(10)])
 ```
 
 To use basic authentication with all requests:
@@ -39,7 +40,9 @@ from asks import BasicAuth
 username = 'user'
 password = 'pw'
 responses = ManyRequests(n_workers=5, n_connections=5)(
-                 method='GET', url=['https://example.org' for i in range(10)], auth=BasicAuth((username, password)))
+                method='GET',
+                url=['https://example.org' for i in range(10)],
+                auth=BasicAuth((username, password)))
 ```
 
 To execute embarrassingly parallel async coroutines, for example 10 `trio.sleep` calls:
@@ -47,5 +50,5 @@ To execute embarrassingly parallel async coroutines, for example 10 `trio.sleep`
 ```python
 from many_requests import EasyAsync, delayed
 import trio
-EasyAsync(n_workers = 4)(delayed(trio.sleep)(i) for i in range(10))
+outputs = EasyAsync(n_workers = 4)(delayed(trio.sleep)(i) for i in range(10))
 ```
