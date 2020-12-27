@@ -5,6 +5,7 @@ from typing import List, Optional, Dict, Union
 
 import asks
 import trio
+from asks import AuthBase
 from asks.errors import BadHttpResponse
 from asks.response_objects import Response
 from h11 import RemoteProtocolError
@@ -61,12 +62,12 @@ class ManyRequests:
         self,
         method: Union[str, List[str]],
         url: Union[str, List[str]],
-        params=None,
-        data=None,
-        json=None,
-        headers=None,
-        cookies=None,
-        auth=None,
+        params: Union[None, str, Dict, List[str], List[Dict]] = None,
+        data: Union[None, str, Dict, List[str], List[Dict]] = None,
+        json: Union[None, Dict, List[Dict]] = None,
+        headers: Union[None, Dict, List[Dict]] = None,
+        cookies: Union[None, Dict, List[Dict]] = None,
+        auth: Union[None, AuthBase, List[AuthBase]] = None,
     ) -> List[Union[Response, BadResponse]]:
         """
         Process asynchronously many requests, handling bad responses. Return the responses in the same order.
@@ -80,12 +81,12 @@ class ManyRequests:
         Args:
             method: HTTP method type `GET`, `OPTIONS`, `HEAD`, `POST`, `PUT`, `PATCH`, or `DELETE`.
             url: URL of the Request
-            params: Dictionary, list of tuples or bytes to send in the query string of the Request
-            data: Dictionary, list of tuples, bytes, or file-like object to send in the body of the Request
-            json: A JSON serializable Python object to send in the body of the Request
+            params: Data to send in the query string of the Request. Dictionary or string.
+            data: Data to send in the body of the Request. Dictionary or string.
+            json: A JSON serializable dictionary to send as JSON in the body of the Request.
             headers: Dictionary of HTTP Headers to send with the Request
-            cookies: Dict or CookieJar object to send with the Request
-            auth: Auth tuple to enable Basic/Digest/Custom HTTP Auth
+            cookies: Dictionary object to send with the Request
+            auth: Enable Basic/Digest/Custom HTTP Auth. Should be a child of `AuthBase`
 
         Returns:
             responses: A list of responses in the same order of the requests. Will include a `BadResponse` in the

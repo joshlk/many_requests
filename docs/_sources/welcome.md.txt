@@ -32,7 +32,17 @@ responses = ManyRequests(n_workers=5, n_connections=5, json=True)(
                  url=[f'https://hacker-news.firebaseio.com/v0/item/{i}.json?print=pretty' for i in range(10)])
 ```
 
-To execute embarrassingly parallel async coroutines:
+To use basic authentication with all requests:
+
+```python
+from asks import BasicAuth
+username = 'user'
+password = 'pw'
+responses = ManyRequests(n_workers=5, n_connections=5)(
+                 method='GET', url=['https://example.org' for i in range(10)], auth=BasicAuth((username, password)))
+```
+
+To execute embarrassingly parallel async coroutines, for example 10 `trio.sleep` calls:
 
 ```python
 from many_requests import EasyAsync, delayed
