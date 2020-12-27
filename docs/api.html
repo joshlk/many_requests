@@ -290,10 +290,10 @@ Used for progress bar</p></li>
 <dl class="py function">
 <dt id="many_requests.easy_async.zip_kw">
 <code class="sig-prename descclassname">many_requests.easy_async.</code><code class="sig-name descname">zip_kw</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/many_requests/easy_async.html#zip_kw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#many_requests.easy_async.zip_kw" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return an iterator of dictionaries, where the Nth item of each iterator specified in <cite>kwargs</cite> is paired together.
+<dd><p>Return an iterator of N dictionaries, where the Nth item of each iterator specified in <cite>kwargs</cite> is paired together.
 Like <cite>zip</cite> but returns a dict instead.
-Also keyword arguments which are strings or not iterators are repeated automatically repeated.
-The iterator stops when the shortest iterator has been exhausted.</p>
+Also keyword arguments which are strings or not iterators are automatically repeated N times.
+<cite>zip_kw</cite> stops when the shortest iterator has been exhausted.</p>
 </dd></dl>
 
 </div>

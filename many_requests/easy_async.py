@@ -19,10 +19,10 @@ def delayed(coroutine):
 
 def zip_kw(**kwargs):
     """
-    Return an iterator of dictionaries, where the Nth item of each iterator specified in `kwargs` is paired together.
+    Return an iterator of N dictionaries, where the Nth item of each iterator specified in `kwargs` is paired together.
     Like `zip` but returns a dict instead.
-    Also keyword arguments which are strings or not iterators are repeated automatically repeated.
-    The iterator stops when the shortest iterator has been exhausted.
+    Also keyword arguments which are strings or not iterators are automatically repeated N times.
+    `zip_kw` stops when the shortest iterator has been exhausted.
     """
 
     has_collection = False

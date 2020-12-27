@@ -170,10 +170,10 @@
 
 <div class="viewcode-block" id="zip_kw"><a class="viewcode-back" href="../../api.html#many_requests.easy_async.zip_kw">[docs]</a><span class="k">def</span> <span class="nf">zip_kw</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Return an iterator of dictionaries, where the Nth item of each iterator specified in `kwargs` is paired together.</span>
+<span class="sd">    Return an iterator of N dictionaries, where the Nth item of each iterator specified in `kwargs` is paired together.</span>
 <span class="sd">    Like `zip` but returns a dict instead.</span>
-<span class="sd">    Also keyword arguments which are strings or not iterators are repeated automatically repeated.</span>
-<span class="sd">    The iterator stops when the shortest iterator has been exhausted.</span>
+<span class="sd">    Also keyword arguments which are strings or not iterators are automatically repeated N times.</span>
+<span class="sd">    `zip_kw` stops when the shortest iterator has been exhausted.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">has_collection</span> <span class="o">=</span> <span class="kc">False</span>
