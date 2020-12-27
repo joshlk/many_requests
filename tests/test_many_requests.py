@@ -6,6 +6,7 @@ from many_requests.many_requests_ import ManyRequests
 from many_requests.common import BadResponse
 from .mock_server import web_server
 
+
 @pytest.mark.usefixtures("web_server")
 class TestManyRequest(TestCase):
 

@@ -8,5 +8,5 @@ recommonmark
 sphinx-rtd-theme
 bump2version
 aiohttp
-flaky
 requests
+aiohttp-basicauth-middleware
