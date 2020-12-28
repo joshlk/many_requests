@@ -1,7 +1,6 @@
-
 import logging
 from json import JSONDecodeError
-from typing import List, Optional, Dict, Union
+from typing import List, Optional, Dict, Union, Iterable, Callable
 
 import asks
 import trio
@@ -16,14 +15,14 @@ from .common import BadResponse, N_WORKERS_DEFAULT, N_CONNECTIONS_DEFAULT, is_co
 
 class ManyRequests:
     def __init__(
-        self,
-        n_workers=N_WORKERS_DEFAULT,
-        n_connections=N_CONNECTIONS_DEFAULT,
-        retries=10,
-        retry_sleep=3,
-        ok_codes=(200,),
-        ok_response_func=None,
-        json=False,
+            self,
+            n_workers: int = N_WORKERS_DEFAULT,
+            n_connections: int = N_CONNECTIONS_DEFAULT,
+            retries: int = 10,
+            retry_sleep: float = 3,
+            ok_codes: Iterable[int] = (200,),
+            ok_response_func: Callable = None,
+            json: bool = False,
     ):
         """
         Dead easy interface for executing many HTTP requests asynchronously.
@@ -59,15 +58,15 @@ class ManyRequests:
         self.responses = None
 
     def __call__(
-        self,
-        method: Union[str, List[str]],
-        url: Union[str, List[str]],
-        params: Union[None, str, Dict, List[str], List[Dict]] = None,
-        data: Union[None, str, Dict, List[str], List[Dict]] = None,
-        json: Union[None, Dict, List[Dict]] = None,
-        headers: Union[None, Dict, List[Dict]] = None,
-        cookies: Union[None, Dict, List[Dict]] = None,
-        auth: Union[None, AuthBase, List[AuthBase]] = None,
+            self,
+            method: Union[str, List[str]],
+            url: Union[str, List[str]],
+            params: Union[None, str, Dict, List[str], List[Dict]] = None,
+            data: Union[None, str, Dict, List[str], List[Dict]] = None,
+            json: Union[None, Dict, List[Dict]] = None,
+            headers: Union[None, Dict, List[Dict]] = None,
+            cookies: Union[None, Dict, List[Dict]] = None,
+            auth: Union[None, AuthBase, List[AuthBase]] = None,
     ) -> List[Union[Response, BadResponse]]:
         """
         Process asynchronously many requests, handling bad responses. Return the responses in the same order.
@@ -115,15 +114,15 @@ class ManyRequests:
             tasks=(
                 delayed(self._runner)(request_kwargs=kwargs)
                 for kwargs in zip_kw(
-                    method=method,
-                    url=url,
-                    params=params,
-                    data=data,
-                    json=json,
-                    headers=headers,
-                    cookies=cookies,
-                    auth=auth,
-                )
+                method=method,
+                url=url,
+                params=params,
+                data=data,
+                json=json,
+                headers=headers,
+                cookies=cookies,
+                auth=auth,
+            )
             ),
             length=length,
         )
@@ -135,7 +134,7 @@ class ManyRequests:
 
         last_error = None
 
-        for attempt_i in range(0, self.retries+1):
+        for attempt_i in range(0, self.retries + 1):
             try:
                 try:
                     response = await self.session.request(**request_kwargs)

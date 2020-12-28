@@ -1,6 +1,6 @@
 
 from itertools import repeat, count
-from typing import Iterable, Optional, Coroutine, Any
+from typing import Iterable, Optional, Any, Coroutine, Callable
 
 import trio
 from tqdm.auto import tqdm
@@ -8,13 +8,22 @@ from tqdm.auto import tqdm
 from many_requests.common import N_WORKERS_DEFAULT, is_collection
 
 
-def delayed(coroutine):
-    """Decorator used to capture a coroutine and delay its execution"""
+def delayed(func: Callable[..., Coroutine]):
+    """
+    Decorator used to capture an async function with arguments and delay its execution.
 
-    def delayed_coroutine(*args, **kwargs):
-        return coroutine, args, kwargs
+    Examples:
+        >>> import asks
+        >>> func_, args_, kwargs_ = delayed(asks.request)('GET', url='https://example.org')
+        >>> assert func_ == asks.request
+        >>> assert args_ == ('GET',)
+        >>> assert kwargs_ == {'url': 'https://example.org'}
+    """
 
-    return delayed_coroutine
+    def delayed_func(*args, **kwargs):
+        return func, args, kwargs
+
+    return delayed_func
 
 
 def zip_kw(**kwargs):
@@ -43,7 +52,7 @@ def zip_kw(**kwargs):
 
 
 class EasyAsync:
-    def __init__(self, n_workers=N_WORKERS_DEFAULT):
+    def __init__(self, n_workers: int = N_WORKERS_DEFAULT):
         """
         Dead simple parallel execution of async coroutines.
         `n_workers` are dispatched which asynchronously process each task given.
@@ -114,7 +123,7 @@ class EasyAsync:
             self.outputs.append((idx, output))
             self._progress_update(1)
 
-    def _progress_update(self, n):
+    def _progress_update(self, n: int):
         """Increment progress bar"""
         if self.progress_bar is not None:
             self.progress_bar.update(n)

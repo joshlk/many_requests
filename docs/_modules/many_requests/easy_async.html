@@ -151,7 +151,7 @@
   <h1>Source code for many_requests.easy_async</h1><div class="highlight"><pre>
 <span></span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">repeat</span><span class="p">,</span> <span class="n">count</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Coroutine</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Coroutine</span><span class="p">,</span> <span class="n">Callable</span>
 
 <span class="kn">import</span> <span class="nn">trio</span>
 <span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
@@ -159,13 +159,22 @@
 <span class="kn">from</span> <span class="nn">many_requests.common</span> <span class="kn">import</span> <span class="n">N_WORKERS_DEFAULT</span><span class="p">,</span> <span class="n">is_collection</span>
 
 
-<div class="viewcode-block" id="delayed"><a class="viewcode-back" href="../../api.html#many_requests.easy_async.delayed">[docs]</a><span class="k">def</span> <span class="nf">delayed</span><span class="p">(</span><span class="n">coroutine</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Decorator used to capture a coroutine and delay its execution&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="delayed"><a class="viewcode-back" href="../../api.html#many_requests.easy_async.delayed">[docs]</a><span class="k">def</span> <span class="nf">delayed</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">Coroutine</span><span class="p">]):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decorator used to capture an async function with arguments and delay its execution.</span>
 
-    <span class="k">def</span> <span class="nf">delayed_coroutine</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">coroutine</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; import asks</span>
+<span class="sd">        &gt;&gt;&gt; func_, args_, kwargs_ = delayed(asks.request)(&#39;GET&#39;, url=&#39;https://example.org&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; assert func_ == asks.request</span>
+<span class="sd">        &gt;&gt;&gt; assert args_ == (&#39;GET&#39;,)</span>
+<span class="sd">        &gt;&gt;&gt; assert kwargs_ == {&#39;url&#39;: &#39;https://example.org&#39;}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">return</span> <span class="n">delayed_coroutine</span></div>
+    <span class="k">def</span> <span class="nf">delayed_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span>
+
+    <span class="k">return</span> <span class="n">delayed_func</span></div>
 
 
 <div class="viewcode-block" id="zip_kw"><a class="viewcode-back" href="../../api.html#many_requests.easy_async.zip_kw">[docs]</a><span class="k">def</span> <span class="nf">zip_kw</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -194,7 +203,7 @@
 
 
 <div class="viewcode-block" id="EasyAsync"><a class="viewcode-back" href="../../api.html#many_requests.easy_async.EasyAsync">[docs]</a><span class="k">class</span> <span class="nc">EasyAsync</span><span class="p">:</span>
-<div class="viewcode-block" id="EasyAsync.__init__"><a class="viewcode-back" href="../../api.html#many_requests.easy_async.EasyAsync.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_workers</span><span class="o">=</span><span class="n">N_WORKERS_DEFAULT</span><span class="p">):</span>
+<div class="viewcode-block" id="EasyAsync.__init__"><a class="viewcode-back" href="../../api.html#many_requests.easy_async.EasyAsync.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">N_WORKERS_DEFAULT</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Dead simple parallel execution of async coroutines.</span>
 <span class="sd">        `n_workers` are dispatched which asynchronously process each task given.</span>
@@ -265,7 +274,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">outputs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">idx</span><span class="p">,</span> <span class="n">output</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_progress_update</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_progress_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_progress_update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Increment progress bar&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">progress_bar</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">n</span><span class="p">)</span></div>
