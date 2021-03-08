@@ -65,7 +65,7 @@ class EasyAsync:
 
             >>> EasyAsync(n_workers = 4)(delayed(trio.sleep)(i) for i in range(10))
 
-            Each task calculates `isclose` with a different `a` and `b` paramter. `abs_tol` is set the same for all.
+            Each of the 10 tasks calculates `trio.sleep`.
 
             >>> from math import isclose
             >>> async def isclose_(a, b, abs_tol): return isclose(a=a, b=b, abs_tol=abs_tol)
