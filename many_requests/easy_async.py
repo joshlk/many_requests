@@ -61,11 +61,11 @@ class EasyAsync:
             n_workers: Number of workers to use
 
         Examples:
-            Each task sleeps for `i` seconds asyncronosly:
+            Each of the 10 tasks sleeps for `i` seconds asyncronosly:
 
             >>> EasyAsync(n_workers = 4)(delayed(trio.sleep)(i) for i in range(10))
 
-            Each of the 10 tasks calculates `trio.sleep`.
+            Each task calculates `isclose` with a different `a` and `b` paramter. `abs_tol` is set to 4 for all tasks:
 
             >>> from math import isclose
             >>> async def isclose_(a, b, abs_tol): return isclose(a=a, b=b, abs_tol=abs_tol)
