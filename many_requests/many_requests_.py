@@ -1,13 +1,14 @@
+
 import logging
 from json import JSONDecodeError
+from ssl import SSLError
 from typing import List, Optional, Dict, Union, Iterable, Callable
-
 import asks
 import trio
 from asks import AuthBase
-from asks.errors import BadHttpResponse
+from asks.errors import AsksException
 from asks.response_objects import Response
-from h11 import RemoteProtocolError
+from h11 import ProtocolError
 
 from .easy_async import EasyAsync, delayed, zip_kw
 from .common import BadResponse, N_WORKERS_DEFAULT, N_CONNECTIONS_DEFAULT, is_collection
@@ -138,17 +139,22 @@ class ManyRequests:
             try:
                 try:
                     response = await self.session.request(**request_kwargs)
-                except RemoteProtocolError as e:
-                    raise BadResponse('RemoteProtocolError', reason='RemoteProtocolError', attempt_num=attempt_i)
-                except BadHttpResponse as e:
-                    raise BadResponse('BadHttpResponse', reason='BadHttpResponse', attempt_num=attempt_i)
+                except ProtocolError as e:
+                    name = type(e).__name__
+                    raise BadResponse(f'HTTPError:{name}', reason=name, attempt_num=attempt_i)
+                except AsksException as e:
+                    name = type(e).__name__
+                    raise BadResponse(f'AsksException:{name}', reason=name, attempt_num=attempt_i)
+                except SSLError as e:
+                    name = type(e).__name__
+                    raise BadResponse(f'SSLError:{name}', reason=name, attempt_num=attempt_i)
 
                 if self.ok_codes != "any" and response.status_code not in self.ok_codes:
                     raise BadResponse(f"Bad response status code: {response.status_code}. Should be in {self.ok_codes}",
                                       response=response, reason='bad_status_code', attempt_num=attempt_i)
 
                 if self.ok_response_func is not None and not self.ok_response_func(response):
-                    raise BadResponse('Not OK response determined by `ok_response_func`', response=response,
+                    raise BadResponse('Bad response determined by `ok_response_func`', response=response,
                                       reason='ok_response_func', attempt_num=attempt_i)
 
                 if self.json:
@@ -167,8 +173,9 @@ class ManyRequests:
                 except NameError:
                     code, text = None, None
 
+                request_kwargs_ = {k: v for k, v in request_kwargs.items() if v is not None}
                 logging.info(
-                    f"BAD Response {request_kwargs}: Attempt {attempt_i}. Error {type(e).__name__}. Code: {code}. Body: {text}"
+                    f"Bad response {request_kwargs_}: Attempt {attempt_i}. Error {type(e).__name__}. Code: {code}. Body: {text}"
                 )
 
                 last_error = e
