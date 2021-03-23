@@ -181,7 +181,8 @@ class ManyRequests:
                 last_error = e
                 await trio.sleep(self.retry_sleep)
 
+        request_kwargs_ = {k: v for k, v in request_kwargs.items() if v is not None}
         logging.warning(
-            f"FAILED Request {request_kwargs}: Permanently failed. Last error: {last_error.description}"
+            f"FAILED Request {request_kwargs_}: Permanently failed. Last error: {last_error.description}"
         )
         return last_error

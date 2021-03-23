@@ -3,13 +3,13 @@
 Requires: `pip install twine`
 Don't forget to increment version number
 
-Bump version (major, minor or patch):
+Bump version (major, minor or micro):
 
 ```shell script
 bump2version micro
 ```
 
-Download distributions
+Build dist
 
 ```shell script
 make dist
@@ -31,7 +31,7 @@ source many_requests-venv/bin/activate
 Test install (in virtual env):
 
 ```shell script
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple many_requests
+pip install --upgrade --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple many_requests
 ```
 
 Then push to real PyPI:
